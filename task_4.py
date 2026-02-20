@@ -1,6 +1,5 @@
 from typing import Callable, Dict
 
-from colorama import Fore
 from rich.console import Console
 from rich.table import Table
 
@@ -11,37 +10,37 @@ def parse_input(user_input: str) -> tuple:
     return cmd, *args
 
 
-def say_to_hello():
-    return f"{Fore.YELLOW} How can I help you?"
+def say_to_hello(*_):
+    return "\n[green] How can I help you?"
 
 
 def add_contact(args: list, contacts: dict) -> str:
     name, phone = args
     if name not in contacts:
         contacts[name] = phone
-        return f"\n{Fore.GREEN} Contact added."
+        return "\n[green] Contact added."
     else:
-        return f"\n{Fore.RED} Contact already exists."
+        return "\n[red] Contact already exists."
 
 
 def change_phone(args: list, contacts: dict) -> str:
     name, phone = args
     if name in contacts:
         contacts[name] = phone
-        return f"\n{Fore.GREEN} Phone number changed."
+        return "\n[green] Phone number changed."
     else:
-        return f"\n{Fore.RED} There is no such a contact"
+        return "\n[red] There is no such a contact"
 
 
 def show_phone(args: list, contacts: dict) -> str:
     name = args[0]
     if name in contacts:
-        return f"\n{Fore.GREEN} {contacts[name]}"
+        return f"\n[green] {contacts[name]}"
     else:
-        return f"\n{Fore.RED} There is no such a contact"
+        return "\n[red] There is no such a contact"
 
 
-def show_all(contacts: dict) -> Table:
+def show_all(_, contacts: dict) -> Table:
     table = Table(title="\nContacts", style="cyan")
     table.add_column("Name", style="magenta")
     table.add_column("Phone number", style="green")
@@ -72,22 +71,22 @@ def main():
     all -> get all existing contact's phone numbers
     close or exit -> close the bot
     """
-    print(f"\n{Fore.YELLOW} Welcome to the assistant bot! \n{COMMANDS_DESCRIPTION}")
+    console.print(f"\n[yellow] Welcome to the assistant bot! \n{COMMANDS_DESCRIPTION}")
     while True:
         try:
-            user_input = input(f"\n{Fore.WHITE} Enter a command: ")
+            user_input = input("\n Enter a command: ")
             command, *args = parse_input(user_input)
 
             if command in ["close", "exit"]:
-                print(f"\n{Fore.GREEN} Good bye!\n")
+                console.print("\n[green] Good bye!\n")
                 break
             elif command in commands:
                 result = commands[command](args, contacts)
                 console.print(result)
             else:
-                print(f"\n{Fore.RED} Invalid command.")
+                console.print("\n[red] Invalid command.")
         except ValueError:
-            print(f"\n{Fore.RED}Invalid input. Please try again")
+            console.print("\n[red]Invalid input. Please try again")
 
 
 if __name__ == "__main__":
