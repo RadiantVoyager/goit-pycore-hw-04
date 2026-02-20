@@ -4,7 +4,8 @@ def total_salary(path: str) -> tuple[int, int] | tuple[None, None]:
         path: Path to a file with data.
     Returns:
         A tuple of the total and average salaries.
-        If file not found or can't be opened, returns None for both values.
+        If file not found or can't be opened or input format isn't correct,
+        returns None for both values.
     """
     try:
         with open(path, encoding="utf-8") as file:
@@ -17,6 +18,9 @@ def total_salary(path: str) -> tuple[int, int] | tuple[None, None]:
         return None, None
     except UnicodeDecodeError:
         print("Файл не може бути відкрито - не правильне кодування")
+        return None, None
+    except ValueError:
+        print("He правильний формат даних")
         return None, None
 
 

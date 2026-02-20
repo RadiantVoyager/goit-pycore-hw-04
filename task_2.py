@@ -1,11 +1,11 @@
 def get_cats_info(path: str) -> list | None:
-    """Calculate total and
-    Get id, name, age of the provided cats info.
+    """Get id, name, age of the provided cats info.
     Args:
         path: Path to a file with cats data.
     Returns:
         A list of dictionaries with cat information.
-        If file not found or can't be opened, returns None.
+        If file not found or can't be opened or input format isn't correct,
+        returns None.
     """
     try:
         cats_info = []
@@ -19,6 +19,9 @@ def get_cats_info(path: str) -> list | None:
         return None
     except UnicodeDecodeError:
         print("Файл не може бути відкрито - не правильне кодування")
+        return None
+    except ValueError:
+        print("He правильний формат даних")
         return None
 
 
